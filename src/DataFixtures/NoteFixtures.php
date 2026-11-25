@@ -5,9 +5,11 @@ namespace App\DataFixtures;
 use App\Entity\Note;
 use App\Repository\EtudiantRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Override;
 
-class NoteFixtures extends Fixture
+class NoteFixtures extends Fixture implements DependentFixtureInterface
 {
 
     //injecter le repos de etudiant ici
@@ -43,4 +45,12 @@ class NoteFixtures extends Fixture
         }
         $manager->flush();
     }
+
+    #[Override]
+    public function getDependencies(): array
+    {
+        return [EtudiantFixtures::class];
+    }
+
+    
 }

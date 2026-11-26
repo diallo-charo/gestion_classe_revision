@@ -16,6 +16,8 @@ class NoteRepository extends ServiceEntityRepository
         parent::__construct($registry, Note::class);
     }
 
+    
+
 //    /**
 //     * @return Note[] Returns an array of Note objects
 //     */

@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Dto\EtudiantSearchDto;
 use App\Entity\Etudiant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -15,6 +16,19 @@ class EtudiantRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Etudiant::class);
     }
+
+    // recuperer tout les etudiants et s'il y'a un critere de filtre il filtre
+    public function findAllEtudiantAndFitre(EtudiantSearchDto $searchDto): array{
+            $qb = $this->createQueryBuilder('e');
+             // Recherche exacte sur le matricule
+            if ($searchDto->matricule !== null && $searchDto->matricule !== '') {
+                $qb->andWhere('e.matricule = :matricule')
+                ->setParameter('matricule', $searchDto->matricule);
+            }
+            return $qb->getQuery()->getResult();
+    }
+
+ 
 
 //    /**
 //     * @return Etudiant[] Returns an array of Etudiant objects
